@@ -4,11 +4,11 @@
 # Feature: CSV Generator for PVP2EVP mapping
 
 # Steps:
-# Enter the number of PVPs and the number of EVPs
-# Enter the title and the name of each PVPs and the number of input it has
-# Enter the title and the name of each EVPs
-# Enter the inputs for Each PVP
-# Generate the CSV file based on the input
+# Enter the number of inputs and the number of outputs
+# Enter the title and the name of each input and the number of variants it has
+# Enter the title and the name of each output
+# Enter the variant names for Each input
+# Generate the CSV file
 
 from tkinter import *
 from tkinter import messagebox
