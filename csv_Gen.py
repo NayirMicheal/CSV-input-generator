@@ -27,8 +27,10 @@ ENTRY_HEIGHT_OFFSET = 25
 LABEL_X = 20
 SPINBOX_X = 100
 BUTTON_NEXT_X = 150
-BUTTON_FILL_X = 500
-BUTTON_FILL_Y = 300
+BUTTON_FILL_X = 350
+BUTTON_FILL_Y = 60
+GEN_BTN_X = 325
+GEN_BTN_Y = 350
 INPUT_Y_OFFSET = 50
 
 # Label Texts
@@ -58,10 +60,6 @@ class InputArea:
     def get_inputs(self):
         """Retrieves the data from all created Entry widgets."""
         return [entry.get() for entry in self.entries_created]
-
-    def clear_entries(self):
-        """Clears all input entries."""
-        self.entries_created.clear()
         
     def destroy_entries(self):
         """Destroy created entries"""
@@ -272,7 +270,7 @@ class MainWindow:
             else:
                 self.btn_fill_inputs.destroy()
                 self.btn_gen_csv = Button(self.window, text="Gen CSV", fg='black', font=GEN_CSV_FONT, command=self.generate_csv)
-                self.btn_gen_csv.place(x=200, y=225)
+                self.btn_gen_csv.place(x=GEN_BTN_X, y=GEN_BTN_Y)
         else:
             messagebox.showerror('Wrong input', 'Error: one or more input is empty')
 
