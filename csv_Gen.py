@@ -1,7 +1,7 @@
 
 # Created by Nayir Labib at 12/09/2024
 
-# Feature: CSV Generator for PVP2EVP mapping
+# Feature: CSV Generator for INPUT2OUTPUT mapping
 
 # Steps:
 # Enter the number of inputs and the number of outputs
@@ -34,8 +34,8 @@ GEN_BTN_Y = 350
 INPUT_Y_OFFSET = 50
 
 # Label Texts
-LABEL_PVP_TEXT = "Enter Number of inputs"
-LABEL_EVP_TEXT = "Enter Number of outputs"
+LABEL_INPUT_TEXT = "Enter Number of inputs"
+LABEL_OUTPUT_TEXT = "Enter Number of outputs"
 LABEL_TITLE_TEXT = "Set the title of the column and the name of the instance"
 LABEL_COLUMN_TITLE = "Title of the column:"
 LABEL_INSTANCE_NAME = "Name of the instance:"
@@ -136,46 +136,46 @@ class MainWindow:
 
         self.create_initial_widgets()
 
-        self.PVPnum = 0
-        self.EVPnum = 0
+        self.INPUTnum = 0
+        self.OUTPUTnum = 0
         self.num_of_items = 0
         self.txt_title = ""
         self.txt_item_name = ""
 
     def create_initial_widgets(self):
-        """Creates the initial input fields and widgets for PVP and EVP entry."""
-        self.lbl_pvp = Label(self.window, text=LABEL_PVP_TEXT, fg='black', font=LABEL_FONT)
-        self.lbl_pvp.place(x=LABEL_X, y=INPUT_Y_OFFSET)
+        """Creates the initial input fields and widgets for INPUT and OUTPUT entry."""
+        self.lbl_input = Label(self.window, text=LABEL_INPUT_TEXT, fg='black', font=LABEL_FONT)
+        self.lbl_input.place(x=LABEL_X, y=INPUT_Y_OFFSET)
 
-        self.spnbx_pvp = Spinbox(self.window, from_=0, to=10)
-        self.spnbx_pvp.place(x=SPINBOX_X, y=INPUT_Y_OFFSET + 40)
+        self.spnbx_input = Spinbox(self.window, from_=0, to=10)
+        self.spnbx_input.place(x=SPINBOX_X, y=INPUT_Y_OFFSET + 40)
 
-        self.lbl_evp = Label(self.window, text=LABEL_EVP_TEXT, fg='black', font=LABEL_FONT)
-        self.lbl_evp.place(x=LABEL_X, y=INPUT_Y_OFFSET + 100)
+        self.lbl_output = Label(self.window, text=LABEL_OUTPUT_TEXT, fg='black', font=LABEL_FONT)
+        self.lbl_output.place(x=LABEL_X, y=INPUT_Y_OFFSET + 100)
 
-        self.spnbx_evp = Spinbox(self.window, from_=0, to=10)
-        self.spnbx_evp.place(x=SPINBOX_X, y=INPUT_Y_OFFSET + 140)
+        self.spnbx_output = Spinbox(self.window, from_=0, to=10)
+        self.spnbx_output.place(x=SPINBOX_X, y=INPUT_Y_OFFSET + 140)
 
         self.btn_next = Button(self.window, text="Next", fg='black', font=BUTTON_FONT, command=self.on_next_click)
         self.btn_next.place(x=BUTTON_NEXT_X, y=INPUT_Y_OFFSET + 200)
 
     def on_next_click(self):
         """Handles the click event for the Next button, initiates the next steps."""
-        self.PVPnum = int(self.spnbx_pvp.get())
-        self.EVPnum = int(self.spnbx_evp.get())
-        self.num_of_items = self.PVPnum + self.EVPnum
-        if self.PVPnum > 0 and self.EVPnum > 0:
+        self.INPUTnum = int(self.spnbx_input.get())
+        self.OUTPUTnum = int(self.spnbx_output.get())
+        self.num_of_items = self.INPUTnum + self.OUTPUTnum
+        if self.INPUTnum > 0 and self.OUTPUTnum > 0:
             self.hide_initial_widgets()
             self.create_new_area()
         else:
-            messagebox.showerror('Wrong numbers', 'Error: EVP and PVP numbers shall be more than 0')
+            messagebox.showerror('Wrong numbers', 'Error: OUTPUT and INPUT numbers shall be more than 0')
 
     def hide_initial_widgets(self):
         """Hides the initial widgets after the first user input step."""
-        self.lbl_pvp.destroy()
-        self.spnbx_pvp.destroy()
-        self.lbl_evp.destroy()
-        self.spnbx_evp.destroy()
+        self.lbl_input.destroy()
+        self.spnbx_input.destroy()
+        self.lbl_output.destroy()
+        self.spnbx_output.destroy()
         self.btn_next.destroy()
 
     def create_new_area(self):
@@ -212,12 +212,12 @@ class MainWindow:
             
             self.txt_title = self.entry_col_title.get()
             self.txt_item_name = self.entry_instance_name.get()
-            num_of_input = int(self.entry_num_inputs.get() if self.num_of_items > self.EVPnum else 0)
+            num_of_input = int(self.entry_num_inputs.get() if self.num_of_items > self.OUTPUTnum else 0)
             
             self.csv_gen.add_item(self.txt_title, self.txt_item_name, num_of_input)
             self.num_of_items -= 1
             
-            if self.num_of_items == self.EVPnum:
+            if self.num_of_items == self.OUTPUTnum:
                 self.lbl_num_inputs.place_forget()
                 self.entry_num_inputs["state"] = "disabled"
                 self.entry_num_inputs.place_forget()
@@ -233,7 +233,7 @@ class MainWindow:
         """Clears the input fields for the next item."""
         self.entry_col_title.delete(0, 'end')
         self.entry_instance_name.delete(0, 'end')
-        if self.num_of_items > self.EVPnum:
+        if self.num_of_items > self.OUTPUTnum:
             self.entry_num_inputs.delete(0, 'end')
 
     def complete_input(self):
@@ -247,9 +247,9 @@ class MainWindow:
         self.entry_num_inputs.destroy()
         self.btn_next_item.destroy()
 
-        self.num_of_items = self.PVPnum
+        self.num_of_items = self.INPUTnum
         
-        next_input_num = int(self.csv_gen.big_list[self.PVPnum - self.num_of_items][2])
+        next_input_num = int(self.csv_gen.big_list[self.INPUTnum - self.num_of_items][2])
         self.input_area.fill_input_area(next_input_num)
 
         self.btn_fill_inputs = Button(self.window, text="Fill input", fg='black', font=BUTTON_FONT, command=self.fill_inputs)
@@ -265,7 +265,7 @@ class MainWindow:
             self.num_of_items -= 1
 
             if self.num_of_items > 0:
-                next_input_num = int(self.csv_gen.big_list[self.PVPnum - self.num_of_items][2])
+                next_input_num = int(self.csv_gen.big_list[self.INPUTnum - self.num_of_items][2])
                 self.input_area.fill_input_area(next_input_num)
             else:
                 self.btn_fill_inputs.destroy()
